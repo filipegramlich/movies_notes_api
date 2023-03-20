@@ -1,12 +1,13 @@
-const path = require('path');
+import path from 'node:path';
 
-module.exports = {
+export default {
   development: {
     client: 'sqlite3',
     connection: {
       filename: path.resolve(__dirname, 'src','database','database.db')
     },
     pool: {
+      // @ts-ignore
       afterCreate: (conn, cb) => conn.run('PRAGMA foreign_keys = ON', cb)
     },
     migrations: {

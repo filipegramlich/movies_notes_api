@@ -3,12 +3,14 @@
       "target": "es6",
       "module": "commonjs",
       "outDir": "./dist",
-      "rootDir": "./src",
+      "rootDir": "./",
       "strict": true,
       "esModuleInterop": true,
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "allowJs": true
     },
     "exclude": [
-      "node_modules"
+      "node_modules",
+      "knexfile.ts"
     ]
   }
