@@ -26,10 +26,10 @@ export class MovieNotesController {
 
         const tagsOfMovie = await tags.map((name: any) => {
 
-            return { 
-                note_id, 
-                name, 
-                user_id 
+            return {
+                note_id,
+                name,
+                user_id
             }
 
         });
@@ -39,8 +39,13 @@ export class MovieNotesController {
         return response.json()
     }
 
-    async update(request: Request, response: Response) {
+    async show(request: Request, response: Response) {
+        
+        const { id } = request.params;
+
+        const note = await connection('movie_notes').where({id});
+
+        response.json(note);
 
     }
-
 }
