@@ -7,4 +7,5 @@ const movieNotesController  = new MovieNotesController;
 
 moviesNotesRoutes.post('/:user_id', movieNotesController.create);
 moviesNotesRoutes.get('/:id', movieNotesController.show);
+moviesNotesRoutes.delete('/:id', movieNotesController.delete);
 

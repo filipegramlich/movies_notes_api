@@ -51,11 +51,11 @@ export class MovieNotesController {
 
     async delete(request: Request, response: Response){
 
-        const { note_id } = request.params;
+        const { id } = request.params;
 
-        const noteForDelete = await connection('movie_notes').where({note_id}).delete();
+        await connection('movie_notes').where({ id }).delete();
 
-        return response.json({ "message":"The note was deleted! "})
+        return response.json()
 
     }
 }
