@@ -61,11 +61,43 @@ export class MovieNotesController {
 
     async index(request: Request, response: Response){
 
-        const { user_id } = request.query;
+        const { user_id, title, tags } = request.query;
 
-        const notes = await connection('movie_notes').where({ user_id }).orderBy('title');
+        let notes;
 
-        response.json(notes);
+
+        if(tags){
+            
+            const filterTags = (tags as string).split(',').map((tag: string) => tag.trim());
+
+            notes = await connection('movie_tags').select([
+                'movie_notes.id',
+                'movie_notes.title',
+                'movie_notes.user_id'
+            ]).where('movie_notes.user_id', user_id)
+                .whereLike('title',`%${title}%`)
+                .whereIn('name', filterTags)
+                .innerJoin('movie_notes','movie_notes.id', "movie_tags.note_id")
+                .orderBy('movie_notes.title');
+
+
+        } else {
+            notes = await connection('movie_notes').where({ user_id }).whereLike('title',`%${title}%`).orderBy('title');
+        }
+
+        const userTags = await connection('movie_tags').where({ user_id });
+
+        const notesWithTags = notes.map((note: any) => {
+
+            const noteTags = userTags.filter((tag: any) => tag.note_id === note.id);
+
+            return {
+                ...note,
+                tags: noteTags
+            }
+        });
+
+        response.json(notesWithTags);
 
     }
 }
