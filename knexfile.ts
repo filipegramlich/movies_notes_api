@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-export default {
+ export const config = {
   development: {
     client: 'sqlite3',
     connection: {

@@ -58,4 +58,14 @@ export class MovieNotesController {
         return response.json()
 
     }
+
+    async index(request: Request, response: Response){
+
+        const { user_id } = request.query;
+
+        const notes = await connection('movie_notes').where({ user_id }).orderBy('title');
+
+        response.json(notes);
+
+    }
 }
